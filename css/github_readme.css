@@ -1,0 +1,15 @@
+body {
+    background: white;
+}
+
+#terminal-window {
+    height: fit-content;
+    --side-size: 20px;
+
+    box-shadow:
+        var(--box-shadow-window),
+        var(--side-size) var(--side-size) var(--color-page-background),
+        calc(var(--side-size) * -1) var(--side-size) var(--color-page-background),
+        var(--side-size) calc(var(--side-size) * -1) var(--color-page-background),
+        calc(var(--side-size) * -1) calc(var(--side-size) * -1) var(--color-page-background);
+}
