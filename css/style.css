@@ -15,7 +15,7 @@ html {
     --transition-project: 0.3s ease-in-out;
 
     --container-margin-top: min(7vh + 2vw, 100vh - 570px);
-    --project-display-height: calc(100vh - 2 * var(--container-margin-top) - 435px);
+    --project-display-height: min(calc(100vh - 2 * var(--container-margin-top) - 435px), 17vh);
 }
 
 body {
