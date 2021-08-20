@@ -26,12 +26,21 @@ $(async () => {
     updateTerminalHeader();
 
     if(!DEBUG) {
-        await sleep(600);
+        for(let i = 0; i < 3; i++) {
+            await sleep(250);
+            terminalContents.text(terminalContents.text().trim() + ".");
+        }
+
         clearTerminal();
 
         // addContent("Logged in as th0m4s_ledos!");
         // await sleep(600);
         clearTerminal();
+
+        /*terminalContents.css({opacity: 0});
+        setTimeout(() => {
+            terminalContents.css({transition: "0.2s ease-in", opacity: 1});
+        }, 0);*/
     }
 
     clearTerminal();
