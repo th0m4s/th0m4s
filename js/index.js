@@ -29,8 +29,8 @@ $(async () => {
         await sleep(600);
         clearTerminal();
 
-        addContent("Logged in as th0m4s_ledos!");
-        await sleep(600);
+        // addContent("Logged in as th0m4s_ledos!");
+        // await sleep(600);
         clearTerminal();
     }
 
