@@ -126,7 +126,7 @@ function setupFilesystem() {
         },
         "contact.txt": {
             type: "file",
-            contents: `You can contact me on Discord (<a href="https://discord.com/users/130031546844315649" target="_blank">th0m4s#0042</a>)
+            contents: `You can contact me on Discord (<a href="https://discord.com/users/130031546844315649" target="_blank">th0m4s#6903</a>)
                 or by email at <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>.`
         }
     };
