@@ -108,6 +108,11 @@ function setupFilesystem() {
                     type: "file",
                     contents: `<img src="/img/github_light_32.png" alt="GitHub icon" class="side-image-link"><div class="side-text-link">th0m4s' GitHub profile:
                         <a href="https://github.com/th0m4s/" target="_blank">https://github.com/th0m4s/</a></div>`
+                },
+                "linkedin.txt": {
+                    type: "file",
+                    contents: `<img src="/img/linkedin_light_32.png" alt="LinkedIn icon" class="side-image-link"><div class="side-text-link">Thomas LEDOS' LinkedIn profile:
+                        <a href="https://www.linkedin.com/in/thomasledos/" target="_blank">https://www.linkedin.com/in/thomasledos/</a></div>`
                 }
             }
         },
@@ -562,5 +567,5 @@ const TEXTS = {
         Hello, I am Thomas LEDOS, a ${age}-year old student in Engineering near Paris. My main hobby since many years is programming and I hope that my experience could help you develop your project.\n
         I'm specializing in working with Javascript (NodeJS & client; with enough knowledge of HTML/CSS) but I've worked with different languages throughout the years, including Python, Java, C# and PHP.\n
         I also manage the Linux server, network and databases for all of my projects. To know more about these, try the <i>help</i> command in this terminal or use the links below, and thanks for reading :)\n
-        <a class="message-link" href="https://github.com/th0m4s/" target="_blank"><img src="/img/github_light_32.png" alt="GitHub icon" class="small-link-image">GitHub</a><a class="message-link" href="#" onclick="executeCommand('cd /projects'); return false;">Projects</a><a class="message-link" href="#" onclick="executeCommand('help'); return false;">Show help</a><a class="message-link" href="/files/CV_ThomasLEDOS_en.pdf" target="_blank">CV (english)</a><a class="message-link" href="/files/CV_ThomasLEDOS_fr.pdf" target="_blank">CV (french)</a><a class="message-link" href="mailto:${CONTACT_EMAIL}" onclick="executeCommand('cat /contact.txt'); return false;">Contact</a>\n`
+        <a class="message-link" href="https://github.com/th0m4s/" target="_blank"><img src="/img/github_light_32.png" alt="GitHub icon" class="small-link-image">GitHub</a><a class="message-link" href="https://www.linkedin.com/in/thomasledos/" target="_blank"><img src="/img/linkedin_light_32.png" alt="LinkedIn icon" class="small-link-image">LinkedIn</a><a class="message-link" href="#" onclick="executeCommand('cd /projects'); return false;">Projects</a><a class="message-link" href="#" onclick="executeCommand('help'); return false;">Show help</a><a class="message-link" href="/files/CV_ThomasLEDOS_en.pdf" target="_blank">CV (english)</a><a class="message-link" href="/files/CV_ThomasLEDOS_fr.pdf" target="_blank">CV (french)</a><a class="message-link" href="mailto:${CONTACT_EMAIL}" onclick="executeCommand('cat /contact.txt'); return false;">Contact</a>\n`
 };
