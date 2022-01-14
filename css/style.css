@@ -14,7 +14,7 @@ html {
     --box-shadow-project: 4px 4px 8px #1f1f1fbb;
     --transition-project: 0.3s ease-in-out;
 
-    --container-margin-top: min(7vh + 2vw, 100vh - 570px);
+    --container-margin-top: max(min(7vh + 2vw, 100vh - 570px), 10px);
     --project-display-height: min(calc(100vh - 2 * var(--container-margin-top) - 435px), 17vh);
 }
 
