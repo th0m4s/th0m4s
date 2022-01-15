@@ -52,7 +52,10 @@ $(async () => {
 });
 
 function addContent(contents = "", classes = "") {
-    return terminalContents.append($("<div />").addClass(classes).html(transformText(contents + "\n")));
+    let element = $("<div />").addClass(classes).html(transformText(contents + "\n"));
+    terminalContents.append(element);
+
+    return element;
 }
 
 function clearTerminal() {
@@ -158,7 +161,8 @@ function setupTerminal() {
     registerCommand("help", "shows this help message", () => {
         let helpMessage = "List of available commands:";
         for(let [name, {help}] of Object.entries(commands)) {
-            helpMessage += "\n&nbsp;" + name + ": " + help;
+            if(help != undefined && help.trim().length > 0)
+                helpMessage += "\n&nbsp;" + name + ": " + help;
         }
 
         helpMessage += "\n\nUp and down arrow keys navigate inside your commands history.\nUse <i>cat /about.txt</i> to display the welcome text again.";
@@ -218,29 +222,119 @@ function setupTerminal() {
 
     registerCommand("ls", "lists files and directories inside a directory", (args) => {
         let requestedPath = currentPath;
+        let showAll = false, showLines = false, humanSizes = false;
         for(let arg of args) {
-            if(!arg.startsWith("-")) {
+            if(arg.startsWith("-")) {
+                if(arg.includes("a")) showAll = true;
+                if(arg.includes("l")) showLines = true;
+                if(arg.includes("h")) humanSizes = true;
+            } else {
                 requestedPath = resolvePath(arg);
                 break;
             }
         }
 
         let structure = getPathStructure(requestedPath);
+        let entries = Object.assign(showAll ? {".": {type: "dir"}, "..": {type: "dir"}} : {}, structure.entries);
         if(structure.type == "dir") {
-            if(Object.keys(structure.entries).length > 0) {
-                let message = "";
-    
-                for(let [name, entry] of Object.entries(structure.entries)) {
-                    if(entry.type == "file") message += `<i class="terminal-ls">${name}</i>`;
-                    else message += `<span class="terminal-ls">${name}</span>`;
+            if(Object.keys(entries).length > 0) {
+                if(showLines) {
+                    let lines = Object.entries(entries).map(([name, entry]) => { return {size: transformSize(getSize(requestedPath + "/" + name, false), humanSizes), name: name, type: entry.type}});
+
+                    let maxSizeLength = Math.max(...lines.map(line => line.size.length));
+                    let totalSize = getSize(requestedPath, false, true);
+
+                    addContent("total " + (humanSizes ? transformSize(totalSize) : totalSize) +"\n" + lines.map(line => (line.type == "dir" ? "d" : "-") + "rw-rw-r-- 1 th0m4s th0m4s " + "&nbsp;".repeat(maxSizeLength - line.size.length) + line.size + " " + line.name).join("\n"));
+                } else {
+                    let message = "";
+
+                    for(let [name, entry] of Object.entries(entries)) {
+                        if(entry.type == "file") message += `<i class="terminal-ls">${name}</i>`;
+                        else message += `<span class="terminal-ls">${name}</span>`;
+                    }
+        
+                    addContent(message);
                 }
-    
-                addContent(message);
             }
         } else {
             addContent("ls: not a directory");
         }
     });
+
+    registerCommand("exit", undefined, () => {
+        addContent("Sorry to see you go! You'll have to close the tab yourself to leave this website.");
+    });
+
+    registerCommand("id", undefined, (_args, sudo) => {
+        if(sudo)
+            addContent("uid=0(root) gid=0(root) groups=0(root)");
+        else addContent("uid=1000(th0m4s) gid=1000(th0m4s) groups=1000(th0m4s),27(sudo)");
+    });
+
+    registerCommand("whoami", undefined, (_args, sudo) => {
+        if(sudo)
+            addContent("root");
+        else addContent("th0m4s");
+    });
+
+    registerCommand("sudo", undefined, (args) => {
+        return internalExec(args.join(" "), true);
+    });
+
+    registerCommand("apt", undefined, async (args, sudo) => {
+        if(args.length == 0) {
+            addContent("custom apt v1.0.0 (js)\nUsage: apt [options] command");
+        } else switch(args[0]) {
+            case "install":
+                if(sudo) {
+                    addContent("Read-only file system!");
+                } else {
+                    addContent("<span style='color: red;'>E:</span> Could not open lock file - open (13: Permission denied)");
+                }
+            case "update":
+                let firstLine = addContent("Reading package lists...", "test");
+                await sleep(1000);
+                firstLine.html("Reading package lists... Done");
+
+                if(sudo) {
+                    addContent("Already up-to-date!");
+                } else {
+                    addContent("<span style='color: red;'>E:</span> Could not open lock file - open (13: Permission denied)");
+                }
+                break;
+            default:
+                addContent("<span style='color: red;'>E:</span> Invalid operation " + args[0]);
+                break;
+        }
+    });
+
+    registerCommand("mv", undefined, () => {
+        addContent("Read-only filesystem!");
+    });
+
+    registerCommand("cp", undefined, () => {
+        addContent("Read-only filesystem!");
+    });
+
+    registerCommand("rm", undefined, () => {
+        addContent("Read-only filesystem!");
+    });
+
+    registerCommand("mkdir", undefined, () => {
+        addContent("Read-only filesystem!");
+    });
+
+    registerCommand("nano", undefined, () => {
+        addContent("Why don't you try using vi?");
+    });
+
+    registerCommand("vi", undefined, () => {
+        addContent("Why don't you try using nano?");
+    });
+}
+
+function transformSize(size, humanSize = true) {
+    return humanSize && size > 1024 ? (size / 1024).toFixed(1) + "K" : size.toString();
 }
 
 function getPathType(path) {
@@ -268,6 +362,24 @@ function getPathStructure(path) {
     let requestedStructure = currentEntries[lastPart];
     if(requestedStructure == undefined) return false;
     else return requestedStructure;
+}
+
+function getSize(path, real = false, rec = false) {
+    if(!real && (path.endsWith("/.") || path.endsWith("/.."))) return 4096;
+
+    let structure = getPathStructure(path);
+
+    if(structure == undefined || structure == false) return 0;
+    else if(structure.type == "file") return structure.contents.length;
+    else if(!real && !rec) return 4096; // directory inside a directory is an entry list, don't go further
+
+    let size = 0;
+    for(let [name, entry] of Object.entries(structure.entries)) {
+        if(entry.type == "file") size += Math.max(entry.contents.length, 4096);
+        else size += real ? getSize(name, real, true) : 4096; // 4096 is the minimum size of an entry on disk (small file or directory)
+    }
+
+    return size;
 }
 
 function getAskPrefix() {
@@ -365,19 +477,19 @@ function askCommand(firstCommand = false) {
     if(MOBILE) currentInput.attr("disabled", "disabled");
 }
 
-function internalExec(command) {
+async function internalExec(command, sudo = false) {
     let parts = matchParts(command);
 
     if(parts != null && parts.length > 0) {
         let commandName = parts.shift();
 
         if(commands[commandName] != undefined) {
-            commands[commandName].execute(parts);
+            await commands[commandName].execute(parts, sudo);
         } else addContent(commandName + ": command not found");
     }
 }
 
-function executeCommand(command) {
+async function executeCommand(command) {
     if(currentInput != undefined) {
         command = command.trim();
 
@@ -389,7 +501,7 @@ function executeCommand(command) {
 
         currentInput = undefined;
 
-        internalExec(command);
+        await internalExec(command);
         askCommand();
     }
 }
