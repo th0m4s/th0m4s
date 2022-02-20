@@ -15,6 +15,12 @@ $(async () => {
             closeProject();
     });
 
+    $(window).on("hashchange", (event) => {
+        if(openingProjectHash) {
+            openingProjectHash = false;
+        } else openProjectFromHash();
+    });
+
     terminalContents = $("#terminal-contents");
     terminalTitle = $("#terminal-title");
 
@@ -24,6 +30,7 @@ $(async () => {
     projectDetails = $("#project-details");
 
     updateTerminalHeader();
+    openProjectFromHash();
 
     if(!DEBUG) {
         for(let i = 0; i < 3; i++) {
@@ -634,7 +641,8 @@ function clearGalleryInterval() {
     }
 }
 
-function openProject(projectId) {
+let openingProjectHash = false;
+function openProject(projectId, changeHash = true) {
     let project = PROJECTS[projectId];
     if(project == undefined) return;
 
@@ -644,10 +652,24 @@ function openProject(projectId) {
         <br/><br/><br/>${transformText(project.details)}`);
 
     body.addClass("project-details-visible");
+
+    if(changeHash) {
+        openingProjectHash = true;
+        window.location.hash = "project-" + projectId;
+    }
+}
+
+function openProjectFromHash() {
+    let hash = window.location.hash;
+    if(hash.startsWith("#project-")) {
+        let projectId = hash.substring(9);
+        openProject(projectId, false);
+    } else closeProject();
 }
 
 function closeProject() {
     body.removeClass("project-details-visible");
+    history.replaceState("", document.title, window.location.pathname);
 }
 
 
