@@ -119,6 +119,10 @@ body {
     flex-grow: 1;
 }
 
+#terminal-contents {
+    scrollbar-width: thin;
+}
+
 .window-contents::-webkit-scrollbar-track {
 	border-radius: 4px;
 	background-color: var(--color-terminal-background);
@@ -193,7 +197,9 @@ a, a:hover, a:visited {
     margin: 12px -10px 0px 0px;
     padding-bottom: 12px;
     overflow-x: scroll;
+    overflow-y: hidden;
     scroll-behavior: smooth;
+    scrollbar-width: thin;
 
     display: none;
     opacity: 0;
