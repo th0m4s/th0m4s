@@ -1,6 +1,10 @@
 {
     "project": {
         "type": "apache-php",
-        "create_public": true
+        "create_public": true,
+        "server_options": {
+            "compression": true,
+            "cachecontrol": "$assets"
+        }
     }
 }

@@ -61,7 +61,6 @@ body {
 }
 
 .window-header .window-icon {
-    width: 18px;
     margin: 4px 2px 0px 4px;
 
     border-radius: 50%;
@@ -144,7 +143,7 @@ a, a:hover, a:visited {
 }
 
 .message-link {
-    margin-left: 20px;
+    margin: 4px 0px 6px 20px;
     white-space: nowrap;
     display: inline-block;
 }
@@ -177,7 +176,6 @@ a, a:hover, a:visited {
 }
 
 .small-link-image {
-    width: 15px;
     vertical-align: text-bottom;
     margin-right: 4px;
 }
@@ -283,6 +281,7 @@ a, a:hover, a:visited {
     font-family: "Roboto", sans-serif;
     font-size: 15px;
     font-size: calc(var(--project-display-height) * 0.1);
+    text-align: center;
     width: fit-content;
 
     position: absolute;
@@ -343,7 +342,7 @@ body.project-details-visible #project-window-container {
     min-width: min(600px, 90%);
 }
 
-#project-image {
+#project-image-fallback {
     width: 266px;
     height: 150px;
     

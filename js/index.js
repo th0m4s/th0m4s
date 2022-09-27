@@ -1,4 +1,4 @@
-let body, terminalContents, terminalTitle, projectsContainer, projectTitle, projectImage, projectDetails;
+let body, terminalContents, terminalTitle, projectsContainer, projectTitle, projectImageWebp, projectImageFallback, projectDetails;
 const DEBUG = navigator.userAgent.includes("Electron"); // vscode live preview is based on Electron
 const MOBILE = window.matchMedia("(max-width: 610px)").matches;
 const CONTACT_EMAIL = "hello@th0m4s.dev";
@@ -26,7 +26,8 @@ $(async () => {
 
     projectsContainer = $("#projects-container");
     projectTitle = $("#project-title");
-    projectImage = $("#project-image");
+    projectImageWebp = $("#project-image-webp");
+    projectImageFallback = $("#project-image-fallback");
     projectDetails = $("#project-details");
 
     updateTerminalHeader();
@@ -404,7 +405,7 @@ function askCommand(firstCommand = false) {
     historyCommandId = 0;
     commandsHistory.unshift("");
 
-    addContent(`${getAskPrefix()}$ <input class="current-input terminal-input" />`, "ask-command");
+    addContent(`${getAskPrefix()}$ <input class="current-input terminal-input" aria-label="command input" />`, "ask-command");
     currentInput = $(".current-input");
     
     if(!DEBUG || !firstCommand) currentInput.focus();
@@ -522,7 +523,10 @@ function scrollTerminal() {
 const PROJECTS = {
     "platform_manager": {
         name: "Platform Manager",
-        image: "/img/projects/platform_manager.png",
+        images: {
+            fallback: "/img/projects/platform_manager.png",
+            webp: "/img/projects/platform_manager.webp"
+        },
         small: "NodeJS-based PaaS",
         details: `Platform Manager is a VPS/server dashboard to manage apps and mail accounts for multiple users. It was created to work like a PaaS (Platform as a Service), one example being Heroku. As each dyno was billed separately, the goal of this dashboard is to be able to run multiple projects/website at the cost of a single server.\n
             Each project runs in an isolated Docker container and supports multiple backends, from Apache, Nginx and NodeJS and all the features are added by custom plugins, including databases, persistent storage, custom domains or even custom DNS records.\n
@@ -532,7 +536,10 @@ const PROJECTS = {
     },
     "keys_manager": {
         name: "Keys Manager",
-        image: "/img/projects/keys_manager.png",
+        images: {
+            fallback: "/img/projects/keys_manager.png",
+            webp: "/img/projects/keys_manager.webp"
+        },
         small: "Client managing SSH keys",
         details: `Keys Manager simple goal is to secure SSH keys. Password-based SSH authentication is not the recommended nor the most secure way of configuring a server, but managing SSH keys is also not that easy, specially if you have multiple computers or want to be able to login anywhere without the need of a USB stick with the keys in case of an emergency.\n
             Keys Manager does that for you! You upload your keys on your panel, and as no password is saved, you keep the control on how they can be used. There is no way to download the key from the panel after the upload, you need to use the second part of Keys Manager, the client.\n
@@ -542,7 +549,10 @@ const PROJECTS = {
     },
     "minecraft_plugins": {
         name: "Minecraft plugins",
-        image: "/img/projects/minecraft_plugins.png",
+        images: {
+            fallback: "/img/projects/minecraft_plugins.png",
+            webp: "/img/projects/minecraft_plugins.webp"
+        },
         small: "Various Bukkit plugins in Java",
         details: `During a summer camp, one of the activity leaders created a Minecraft server on his VPS for the children. As I had some Java experience, after the camp ended, I started to create plugins to achieve really simple tasks like protecting zones, automating gifts or even adding more damage to fishing rods.\n
             A year later, with some friends of middle school, we started working on a Minecraft server with minigame, and while others were creating the maps, I was in charge of creating the plugins. It was at that time I discovered BungeeCord and the proxy architecture of Minecraft.
@@ -552,7 +562,10 @@ const PROJECTS = {
     },
     "websites": {
         name: "Various websites",
-        image: "/img/projects/websites.png",
+        images: {
+            fallback: "/img/projects/websites.png",
+            webp: "/img/projects/websites.webp"
+        },
         small: "Various static or interactive websites",
         details: `As it can be deducted from the other projects, I really enjoy programming in my free time, and that include various websites I made throughout the years. The latest one is the website you're on, and if you take a look at it's code, I honestly think that it contains improvements compared to the first ones I made.\n
             <i> &bull; Vetnet: </i>\nFor example, during a summer camp, we had to imagine a tech project, and with my group, we though about a smart screen generating outfits based on what you have in your wardrobe, and it had a semi-working demo (the shown outfit is static) at <a href="https://vetnet.th0m4s.dev/" target="_blank">https://vetnet.th0m4s.dev/</a>.
@@ -563,7 +576,10 @@ const PROJECTS = {
     },
     "laserman": {
         name: "TheLaserMan",
-        image: "/img/projects/laserman.png",
+        images: {
+            fallback: "/img/projects/laserman.png",
+            webp: "/img/projects/laserman.webp"
+        },
         small: "Android arcade game made with Unity3D",
         details: `TheLaserMan is my first <i>large</i> project I worked on, it started more than ${age-15} years ago. Even I tried lots in the past of Unity3D features, for this mobile arcade game, I chose to remain in a 2D space with simple sprites to concentrate on more important aspect like a game manager, a generator for unique runs and a cloud save system.\n
             It made me learn about new SDK, like the new Unity Input system or the Play Games SDK for Unity and these were the first documentations I read carefully. At the beginning, not everything would work correctly, the save could be corrupted by playing offline or with different devices and there was no bonuses.\
@@ -572,7 +588,10 @@ const PROJECTS = {
     },
     "space_saver": {
         name: "Space Saver",
-        image: "/img/projects/space_saver.png",
+        image: {
+            fallback: "/img/projects/space_saver.png",
+            webp: "/img/projects/space_saver.webp"
+        },
         small: "Submission for the Gynvael's Winter GameDev Challenge 2018/2019",
         details: `blabla spacer saverAt the end of 2018, a Youtube named <i>LiveOverflow</i> collaborated with Gynvael Coldwind to organize a gamedev challenge, where all participants where given 5 weeks to build a game running on Chrome and Windows 10 (at least, it could of course run on other systems and browsers). As it runs in a browser client, the game had to be made with Javascript but could of course contains WebAssembly code in C, C++ or Rust.\
             Some restrictions were given, like a back story of a hacker helping space marines visiting an abandonned space station, the usage of an overlay with 2 separate displays, a maximum of 20 files and 128 000 bytes (approx. 128kb).\n
@@ -581,7 +600,10 @@ const PROJECTS = {
     },
     "gcode_car_simulator": {
         name: "gcode car simulator",
-        image: "/img/projects/gcode_car_simulator.png",
+        images: {
+            fallback: "/img/projects/gcode_car_simulator.png",
+            webp: "/img/projects/gcode_car_simulator.webp"
+        },
         small: "gcode car simulator for school",
         details: `During my first year of Engineering school, one of my lesson was the <i>construction</i> of a small car profile in a CD. To achieve this, we had to use a really large machine that can cut and drill metal pieces. To control this machine, we needed to feed it a program wrote in <i>gcode</i>. This is a set of instruction indicating how the tools inside the machine should move.\n
             However, we were warned that the machine can broke easily if a tool touch a screw maintaining the disc in place, and checking all the class programs manually would have taken a long time, and online existing simulators would not print error messages, because they are specific to our exercice. It gave me the idea to build a custom gcode simulator, only executing basic instructions for linear and circular movement (G0 to G3) but a view of the disc, the screws and messages about requirements not being fulfilled.\n 
@@ -592,7 +614,10 @@ const PROJECTS = {
     },
     "salute_assistant": {
         name: "Salute Assistant",
-        image: "/img/projects/salute_assistant.png",
+        images: {
+            fallback: "/img/projects/salute_assistant.png",
+            webp: "/img/projects/salute_assistant.webp"
+        },
         small: "Java assistant with speech recognition",
         details: `Salute Assistant is a Java program made some years ago with the goal of replacing an AI assistant like Google Home or Amazon Alexa by running on a Raspnerry PI connected to the TV and a speaker. The full working version with a TV and the offline speech recognition of the keyword "Hey Salute" to start it never happened, but the program was working on a PC.\n
             It was created to support multiple languages, but only French was built for it (with sentences, verbs...). You simply ask a question and Salute tries to answer it the best way possible, everything with cloud-based speech recognition and local text-to-speech (TTS).\n
@@ -647,7 +672,8 @@ function openProject(projectId, changeHash = true) {
     if(project == undefined) return;
 
     projectTitle.html("Project - " + project.name);
-    projectImage.attr("src", project.image);
+    projectImageWebp.attr("srcset", project.images.webp);
+    projectImageFallback.attr("src", project.images.fallback);
     projectDetails.html(`<b>${project.name}</b><br/><span class="project-subdetails">${project.small}</span>
         <br/><br/><br/>${transformText(project.details)}`);
 
@@ -701,5 +727,5 @@ const TEXTS = {
         Hello, I am Thomas LEDOS, a ${age}-year old student in Engineering at <a target="_blank" href="https://esilv.fr/en/">ESILV</a> near Paris. My main hobby since many years is programming and I hope that my experience could help you develop your project.\n
         I'm specializing in working with Javascript (NodeJS & client; with enough knowledge of HTML/CSS) but I've worked with different languages throughout the years, including Python, Java, C# and PHP.\n
         I also manage the Linux server, network and databases for all of my projects. To know more about these, try the <i>help</i> command in this terminal or use the links below, and thanks for reading :)\n
-        <a class="message-link" href="https://github.com/th0m4s/" target="_blank"><img src="/img/github_light_32.png" alt="GitHub icon" class="small-link-image">GitHub</a><a class="message-link" href="https://www.linkedin.com/in/thomasledos/" target="_blank"><img src="/img/linkedin_light_32.png" alt="LinkedIn icon" class="small-link-image">LinkedIn</a><a class="message-link" href="#" onclick="executeCommand('cd /projects'); return false;">Projects</a><a class="message-link" href="#" onclick="executeCommand('help'); return false;">Show help</a><a class="message-link" href="/files/CV_ThomasLEDOS_en.pdf" target="_blank">CV (english)</a><a class="message-link" href="/files/CV_ThomasLEDOS_fr.pdf" target="_blank">CV (french)</a><a class="message-link" href="mailto:${CONTACT_EMAIL}" onclick="executeCommand('cat /contact.txt'); return false;">Contact</a>\n`
+        <a class="message-link" href="https://github.com/th0m4s/" target="_blank"><img src="/img/github_light_32.png" alt="GitHub icon" class="small-link-image" width="15px" height="15px">GitHub</a><a class="message-link" href="https://www.linkedin.com/in/thomasledos/" target="_blank"><img src="/img/linkedin_light_32.png" alt="LinkedIn icon" class="small-link-image" width="15px" height="15px">LinkedIn</a><a class="message-link" href="#" onclick="executeCommand('cd /projects'); return false;">Projects</a><a class="message-link" href="#" onclick="executeCommand('help'); return false;">Show help</a><a class="message-link" href="/files/CV_ThomasLEDOS_en.pdf" target="_blank">CV (english)</a><a class="message-link" href="/files/CV_ThomasLEDOS_fr.pdf" target="_blank">CV (french)</a><a class="message-link" href="mailto:${CONTACT_EMAIL}" onclick="executeCommand('cat /contact.txt'); return false;">Contact</a>\n`
 };

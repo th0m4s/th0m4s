@@ -26,7 +26,7 @@
     <div id="container">
         <div id="terminal-window" class="custom-window">
             <div class="window-header">
-                <img class="window-icon" src="/img/favicon.ico" alt="th0m4s profile picture">
+                <img class="window-icon" width="18px" height="18px" src="/img/favicon.ico" alt="th0m4s profile picture">
                 <span class="window-title" id="terminal-title">th0m4s_ledos@portfolio:/</span>   
             
                 <span class="window-buttons">
@@ -44,42 +44,66 @@
         <div id="projects-container">
             <div id="projects-gallery">
                 <div class="project-display" onclick="openProject('platform_manager')">
-                    <img src="/img/projects/platform_manager.png" alt="screenshot of the platform manager dashboard">
+                    <picture>
+                        <source srcset="/img/projects/platform_manager.webp" type="image/webp">
+                        <img src="/img/projects/platform_manager.png" alt="screenshot of the platform manager dashboard">
+                    </picture>
                     <div class="project-image-backdrop"></div>
                     <div class="project-name">Platform Manager</div>
                 </div>
                 <div class="project-display" onclick="openProject('keys_manager')">
-                    <img src="/img/projects/keys_manager.png" alt="screenshot of the keys manager dashboard and client">
+                    <picture>
+                        <source srcset="/img/projects/keys_manager.webp" type="image/webp">
+                        <img src="/img/projects/keys_manager.png" alt="screenshot of the keys manager dashboard and client">
+                    </picture>
                     <div class="project-image-backdrop"></div>
                     <div class="project-name">Keys Manager</div>
                 </div>
                 <div class="project-display" onclick="openProject('minecraft_plugins')">
-                    <img src="/img/projects/minecraft_plugins.png" alt="minecraft world image">
+                    <picture>
+                        <source srcset="/img/projects/minecraft_plugins.webp" type="image/webp">
+                        <img src="/img/projects/minecraft_plugins.png" alt="minecraft world image">
+                    </picture>
                     <div class="project-image-backdrop"></div>
                     <div class="project-name">Minecraft plugins</div>
                 </div>
                 <div class="project-display" onclick="openProject('websites')">
-                    <img src="/img/projects/websites.png" alt="different screenshots of various websites">
+                    <picture>
+                        <source srcset="/img/projects/websites.webp" type="image/webp">
+                        <img src="/img/projects/websites.png" alt="different screenshots of various websites">
+                    </picture>
                     <div class="project-image-backdrop"></div>
                     <div class="project-name">Websites</div>
                 </div>
                 <div class="project-display" onclick="openProject('laserman')">
-                    <img src="/img/projects/laserman.png" alt="picture with the laser man obstacles and screenshot">
+                    <picture>
+                        <source srcset="/img/projects/laserman.webp" type="image/webp">
+                        <img src="/img/projects/laserman.png" alt="picture with the laser man obstacles and screenshot">
+                    </picture>
                     <div class="project-image-backdrop"></div>
                     <div class="project-name">TheLaserMan</div>
                 </div>
                 <div class="project-display" onclick="openProject('space_saver')">
-                    <img src="/img/projects/space_saver.png" alt="screenshot of the space saver game">
+                    <picture>
+                        <source srcset="/img/projects/space_saver.webp" type="image/webp">
+                        <img src="/img/projects/space_saver.png" alt="screenshot of the space saver game">
+                    </picture>
                     <div class="project-image-backdrop"></div>
                     <div class="project-name">Space Saver</div>
                 </div>
                 <div class="project-display" onclick="openProject('gcode_car_simulator')">
-                    <img src="/img/projects/gcode_car_simulator.png" alt="screenshot of the gcode car simulator">
+                    <picture>
+                        <source srcset="/img/projects/gcode_car_simulator.webp" type="image/webp">
+                        <img src="/img/projects/gcode_car_simulator.png" alt="screenshot of the gcode car simulator">
+                    </picture>
                     <div class="project-image-backdrop"></div>
                     <div class="project-name">gcode car simulator</div>
                 </div>
                 <div class="project-display" onclick="openProject('salute_assistant')">
-                    <img src="/img/projects/salute_assistant.png" alt="salute assistant program with Paris weather">
+                    <picture>
+                        <source srcset="/img/projects/salute_assistant.webp" type="image/webp">
+                        <img src="/img/projects/salute_assistant.png" alt="salute assistant program with Paris weather">
+                    </picture>
                     <div class="project-image-backdrop"></div>
                     <div class="project-name">Salute Assistant</div>
                 </div>
@@ -92,7 +116,7 @@
 
         <div id="project-window" class="custom-window">
             <div class="window-header">
-                <img class="window-icon" src="/img/favicon.ico" alt="th0m4s profile picture">
+                <img class="window-icon" width="18px" height="18px" src="/img/favicon.ico" alt="th0m4s profile picture">
                 <span class="window-title" id="project-title"></span>   
             
                 <span class="window-buttons">
@@ -103,7 +127,10 @@
             </div>
 
             <div id="project-contents" class="window-contents">
-                <img id="project-image" alt="project image" src="">
+                <picture>
+                    <source srcset="" type="image/webp" id="project-image-webp">
+                    <img alt="project image" src="" id="project-image-fallback">
+                </picture>
                 <div id="project-details">
                     
                 </div>
@@ -111,7 +138,7 @@
         </div>
     </div>
 
-    <script src="/js/jquery.js"></script>
+    <script src="/js/jquery.slim.min.js"></script>
     <script src="/js/index.js"></script>
 </body>
 </html>
