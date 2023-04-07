@@ -609,8 +609,8 @@ const PROJECTS = {
             However, we were warned that the machine can broke easily if a tool touch a screw maintaining the disc in place, and checking all the class programs manually would have taken a long time, and online existing simulators would not print error messages, because they are specific to our exercice. It gave me the idea to build a custom gcode simulator, only executing basic instructions for linear and circular movement (G0 to G3) but a view of the disc, the screws and messages about requirements not being fulfilled.\n 
             It completely works within the client browser and the server is only responsible of the save system used to send cars instructions between users.\n
             During the semester, I realized that we needed figures of each car model, this is why I added an image generator inside the "Export..." menu below the simulation screen.\n 
-            You can check out the simulator here (messages in french): <a href="https://techfab-tools.tk/" target="_blank">https://techfab-tools.tk/</a>.
-            If you want to try it with a car, you can use this link: <a href="https://techfab-tools.tk/?car=a8s4" target="_blank">https://techfab-tools.tk/?car=a8s4</a>.`
+            You can check out the simulator here (messages in french): <a href="https://techfab-tools.th0m4s.dev/" target="_blank">https://techfab-tools.th0m4s.dev/</a>.
+            If you want to try it with a car, you can use this link: <a href="https://techfab-tools.th0m4s.dev/?car=a8s4" target="_blank">https://techfab-tools.th0m4s.dev/?car=a8s4</a>.`
     },
     "salute_assistant": {
         name: "Salute Assistant",
