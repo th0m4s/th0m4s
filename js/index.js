@@ -588,7 +588,7 @@ const PROJECTS = {
     },
     "space_saver": {
         name: "Space Saver",
-        image: {
+        images: {
             fallback: "/img/projects/space_saver.png",
             webp: "/img/projects/space_saver.webp"
         },
